@@ -33,3 +33,14 @@
     margin: 20px 10px;
     height:150px;
   }
+
+  .box{
+
+      display: inline-block;
+    }
+  
+  #btn1{
+    float: right;
+    margin: 30px 30px;
+  }
+  

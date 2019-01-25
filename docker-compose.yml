@@ -3,6 +3,10 @@ version: '3'
 services:
   db:
     image: postgres
+    volumes: 
+      - pgsql:/var/lib/pgsql
+    ports:
+      - '5432:5432'
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
@@ -12,4 +16,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
+volumes:
+  pgsql:
       
