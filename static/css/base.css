@@ -43,4 +43,8 @@
     float: right;
     margin: 30px 30px;
   }
-  
+
+#project {
+    border: 2px solid black;
+    border-radius: 5px;
+  }
