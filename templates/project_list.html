@@ -3,72 +3,149 @@
 
 {% block content %}
 
-
-
-<div class="container-fluid text-center">    
-  <div class="row content">
-      
- 
-    <div class="col-sm-8 text-left"> 
-        
-    <div class="boxContainer">
-        <div class="box">
-        <h1>Your project<h1> 
+<div class="container my-container">
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <div class="columns">
+        <div class="column subtitle">
+          Your project
         </div>
-
-        <div class="box" id="btn1">
-            <a href="{% url 'project_new' %}" class="btn btn-primary btn-sm" role="button">create project</a>
-        </div>
-    </div>
-    
-
-    {% for project in object_list %}
-    <div class="card text-center" id="project">
-        <div class="card-header">
-            {{ project.title }}
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"></h5>
-          <p class="card-text"></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-muted">
+        <div class="column is-clearfix">
+          <a href="{% url 'project_new' %}" class="button is-info is-pulled-right">Create project</a>
         </div>
       </div>
-  {% endfor %}
-      
-    </div>
-
-    <div class="col-sm-4 sidenav">
-      <div class="panel panel-primary">
-        <div class="panel-heading">choose net</div>
-        <div class="panel-body">Crypt Kylin testnet</div>
-       
-        <div class="well">
-            <form>
-              <div class="form-group">
-                <label for="account">create account</label>
-                <input class="form-control" id="account_name">
-              </div>
-              <button type="submit" class="btn btn-default" id="create_account"  onclick="createAccount()">create account</button>
-            </form>
+      <div class="box">
+        <div class="columns is-vcentered">
+          <div class="column is-3"><p>Sample project</p></div>
+          <div class="column"><p>Wallet name</p></div>
+          <div class="column"><button class="button is-info">Open</button></div>
+          <div class="column is-3"><input class="input" type="text" placeholder="Password"></div>
+          <div class="column"><button class="button is-info">Unlock</button></div>
         </div>
-      
-        <div class="well">
-          <form>
-            <div class="form-group">
-              <label for="faucet">get faucet</label>
-              <input class="form-control" id="accountForFaucet">
+        <div class="columns">
+          <div class="column is-one-third">
+            <div class="field">
+              <input class="input" type="text" placeholder="Wallet name">
             </div>
-            <button type="submit" class="btn btn-default" id="get_faucet"  onclick="getFaucet()">get faucet</button>
-          </form>
-         </div>
-        
+            <div class="field">
+              <button class="button is-info is-fullwidth">Create Wallet</button>
+            </div>
+            <div class="field">
+              or
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth">Connect scatter</button>
+            </div>
+            <hr>
+            <div class="field">
+              <input class="input" type="text" placeholder="Account name">
+            </div>
+            <div class="field">
+              <input class="input" type="text" placeholder="Private key">
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth">Account import</button>
+            </div>
+            <div class="field">
+              <p class="help is-danger">Key won't be stored in this app</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <button class="button is-info">Buy ram</button>
+            </div>
+            <div class="columns">
+              <div class="column is-one-third">
+                <div class="field">
+                  <input class="input" type="text" placeholder="Payer">
+                </div>
+              </div>
+              <div class="column is-one-third">
+                <div class="field">
+                  <input class="input" type="text" placeholder="Receiver">
+                </div>
+              </div>
+              <div class="column is-one-third">
+                <div class="field">
+                  <input class="input" type="text" placeholder="Amount">
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="field">
+              <button class="button is-info">Deploy contract</button>
+            </div>
+            <div class="columns">
+              <div class="column is-half">
+                <div class="field">
+                  <input class="input" type="text" placeholder="Account name">
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <div class="file is-centered">
+                    <label class="file-label">
+                      <input class="file-input" type="file" name="resume">
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">Wasm</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="file is-centered">
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="resume">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">abi</span>
+                      </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-        
     </div>
-    
+    <div class="column">
+      <div class="box">
+        <div class="subtitle is-9 has-text-centered">
+          Create account
+        </div>
+        <hr>
+        <div class="field">
+          <label class="label">Chose net</label>
+          <ul class="menu-list">
+            <li><a>Eos mainnet</a></li>
+            <li><a>Jungle testnet</a></li>
+            <li><a class="is-active">Crypt Kylin testnet</a></li>
+          </ul>
+        </div>
+        <hr>
+        <div class="field">
+          <label class="label">Create account</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Account name (12 char)" id="account_name">
+          </div>
+        </div>
+        <button class="button is-info is-fullwidth" onclick="createAccount()">Create account</button>
+        <hr>
+        <div class="field">
+          <label class="label">Get faucet (Enter your account)</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Account name (12 char)" id="accountForFaucet">
+          </div>
+        </div>
+        <button class="button is-info is-fullwidth" onclick="getFaucet()">Get faucet</button>
+      </div>
+    </div>
   </div>
 </div>
 

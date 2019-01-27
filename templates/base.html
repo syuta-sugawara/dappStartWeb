@@ -5,45 +5,49 @@
   <title>dappStart</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
   <link href="{% static 'css/base.css'%}" rel="stylesheet">
   <script src="{% static 'js/base.js' %}"></script>
-
 
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-       <h4><a href="{% url 'home' %}">DappStart</a></h4>
+<nav class="navbar my-header is-dark">
+  <div class="navbar-menu my-navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'home' %}">
+        Home
+      </a>
+      <a class="navbar-item">
+        Document
+      </a>
+      <a class="navbar-item">
+        Contact
+      </a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Document</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
+  </div>
+  <h1 class="has-text-centered logo">
+    <a href="{% url 'home' %}" class="title is-4 has-text-white nuxt-link-active">
+      dappStart
+    </a>
+  </h1>
+  <div class="navbar-end is-hidden-mobile">
+    <div class="navbar-item">
+      <div class="buttons">
+        <a class="button is-info">
+          <strong>Sign up</strong>
+        </a>
+        <a class="button is-light">
+          Log in
+        </a>
+      </div>
     </div>
   </div>
 </nav>
   
-  
 {% block content %}
 {% endblock content %}
-
 
 </body>
 </html>
