@@ -14,9 +14,11 @@
           <a href="{% url 'project_new' %}" class="button is-info is-pulled-right">Create project</a>
         </div>
       </div>
+
+      {% for project in object_list %}
       <div class="box">
         <div class="columns is-vcentered">
-          <div class="column is-3"><p>Sample project</p></div>
+          <div class="column is-3"><p>{{project.title}}</p></div>
           <div class="column"><p>Wallet name</p></div>
           <div class="column"><button class="button is-info">Open</button></div>
           <div class="column is-3"><input class="input" type="text" placeholder="Password"></div>
@@ -114,6 +116,8 @@
         </div>
       </div>
     </div>
+    {% endfor %}
+
     <div class="column">
       <div class="box">
         <div class="subtitle is-9 has-text-centered">
