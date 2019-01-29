@@ -22,3 +22,15 @@
   padding-left: 16px;
   padding-right: 16px;
 }
+
+.my-message-box {
+  word-break: break-all;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
