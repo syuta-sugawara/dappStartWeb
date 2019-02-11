@@ -39,7 +39,7 @@
               or
             </div>
             <div class="field">
-              <button class="button is-info is-fullwidth" onclick="connectScatter()">Connect scatter</button>
+              <button class="button is-info is-fullwidth" id="connectScatterButton">Connect scatter</button>
             </div>
             <hr>
             <div class="field">
@@ -57,7 +57,7 @@
           </div>
           <div class="column">
             <div class="field">
-              <button class="button is-info">Buy ram</button>
+              <button class="button is-info" id="buyRamButton">Buy ram</button>
             </div>
             <div class="columns">
               <div class="column is-one-third">
@@ -78,7 +78,7 @@
             </div>
             <hr>
             <div class="field">
-              <button class="button is-info">Deploy contract</button>
+              <button class="button is-info" id="deployContractButton">Deploy contract</button>
             </div>
             <div class="columns">
               <div class="column is-half">
@@ -90,7 +90,7 @@
                 <div class="field">
                   <div class="file is-centered">
                     <label class="file-label">
-                      <input class="file-input" type="file" name="resume">
+                      <input class="file-input" type="file" name="resume" id="setWasmInput">
                       <span class="file-cta">
                         <span class="file-icon">
                           <i class="fas fa-upload"></i>
@@ -104,7 +104,7 @@
               <div class="column">
                 <div class="file is-centered">
                   <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
+                    <input class="file-input" type="file" name="resume" id="setAbiInput">
                     <span class="file-cta">
                         <span class="file-icon">
                           <i class="fas fa-upload"></i>
@@ -142,7 +142,7 @@
             <input class="input" type="text" placeholder="Account name (12 char)" id="account_name">
           </div>
         </div>
-        <button class="button is-info is-fullwidth" onclick="createAccount()">Create account</button>
+        <button class="button is-info is-fullwidth" id="createAccountButton">Create account</button>
         <hr>
         <div class="field">
           <label class="label">Get faucet (Enter your account)</label>
@@ -150,7 +150,7 @@
             <input class="input" type="text" placeholder="Account name (12 char)" id="accountForFaucet">
           </div>
         </div>
-        <button class="button is-info is-fullwidth" onclick="getFaucet()">Get faucet</button>
+        <button class="button is-info is-fullwidth" id="getFaucetButton">Get faucet</button>
       </div>
     </div>
   </div>
