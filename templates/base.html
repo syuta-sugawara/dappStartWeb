@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,22 +7,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
   <link href="{% static 'css/base.css'%}" rel="stylesheet">
-  
-  <script src="{% static 'js/eosjs-api.js' %}"></script>
-  <script src="{% static 'js/eosjs-jsonrpc.js' %}"></script>
-  <script src="{% static 'js/eosjs-jssig.js' %}"></script>
-  
-  <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
-  <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs.min.js"></script>
-  <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs2.min.js"></script>
-  <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-web3.min.js"></script>
-  <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-tron.min.js"></script>
-
-  <script src="{% static 'js/base.js' %}"></script>
-
 </head>
 <body>
 
@@ -61,5 +48,6 @@
 {% block content %}
 {% endblock content %}
 
+{% render_bundle 'main' %}
 </body>
 </html>
