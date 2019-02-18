@@ -5,10 +5,10 @@ import axios from 'axios';
 
 document.getElementById('createAccountButton').addEventListener('click', () => createAccount());
 async function createAccount(){
-  var account= document.getElementById("account_name").value;
+  const account= document.getElementById("account_name").value;
   await axios.get('http://localhost:8000/projects/account/create?name=' + account)
     .then(function (response) {
-      var messageDom= document.getElementById("message");
+      const messageDom= document.getElementById("message");
       if(response.data.result.error) {
         messageDom.classList.add("has-text-danger");
         messageDom.classList.remove("hidden");
@@ -28,9 +28,8 @@ async function createAccount(){
 document.getElementById('getFaucetButton').addEventListener('click', () => getFaucet());
 function getFaucet(){
   event.preventDefault()
-  var accountForFaucet;
-  accountForFaucet= document.getElementById("accountForFaucet").value;
-  var siteForFaucet='http://faucet.cryptokylin.io/get_token?'+accountForFaucet;
+  const accountForFaucet= document.getElementById("accountForFaucet").value;
+  const siteForFaucet='http://faucet.cryptokylin.io/get_token?'+accountForFaucet;
   console.log(siteForFaucet)
   location.href = siteForFaucet;
 }
@@ -54,16 +53,17 @@ function connectScatter(){
     if(!connected) return false;
     const scatter = ScatterJS.scatter;
     console.log(scatter)
-    ScatterJS.login().then(d =>{
-      console.log('Logged in !!')
-      window.loginData = d;
+    ScatterJS.logout().then(r =>{
+      ScatterJS.login().then(d =>{
+        alert(`Logged in by "${d.accounts[0].name}"`);
+        window.loginData = d;
+      });
     });
   });
 }
 
 document.getElementById('buyRamButton').addEventListener('click', () => buyRam());
 async function buyRam(){
-  console.log(window.loginData);
   const network = ScatterJS.Network.fromJson({
     blockchain:'eos',
     protocol:'https',
@@ -73,8 +73,8 @@ async function buyRam(){
   });
 
   const rpc = new JsonRpc(network.fullhost());
-  const eos = ScatterJS.scatter.eos(network, eosjs_api.default, { rpc, beta3:true });
-
+  const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
+  console.log(window.loginData.accounts[0].name)
   const result = await eos.transact({
     actions: [{
       account: 'eosio',
@@ -94,6 +94,7 @@ async function buyRam(){
     expireSeconds: 30,
   });
   console.log(result);
+  alert(`Success Buy Ram! from "${window.loginData.accounts[0].name}"`);
 }
 
 
