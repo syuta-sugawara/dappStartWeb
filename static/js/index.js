@@ -26,12 +26,22 @@ async function createAccount(){
 }
 
 document.getElementById('getFaucetButton').addEventListener('click', () => getFaucet());
-function getFaucet(){
-  event.preventDefault()
+async function getFaucet(){
   const accountForFaucet= document.getElementById("accountForFaucet").value;
-  const siteForFaucet='http://faucet.cryptokylin.io/get_token?'+accountForFaucet;
-  console.log(siteForFaucet)
-  location.href = siteForFaucet;
+  await axios.get('http://localhost:8000/projects/account/faucet?name='+accountForFaucet)
+    .then(function (response) {
+      const messageDom = document.getElementById("message");
+      if(response.data.result.error) {
+        messageDom.classList.add("has-text-danger");
+        messageDom.classList.remove("hidden");
+        messageDom.classList.add("visible");
+        messageDom.innerText = response.data.result.data;
+      } else {
+        alert('Succeeded get faucet.');
+      }
+    }).catch(function (error) {
+      console.log(error);
+    })
 }
 
 
@@ -55,7 +65,11 @@ function connectScatter(){
     console.log(scatter)
     ScatterJS.logout().then(r =>{
       ScatterJS.login().then(d =>{
+        console.log(d);
         alert(`Logged in by "${d.accounts[0].name}"`);
+        document.getElementById("accountForFaucet").value = d.accounts[0].name;
+        document.getElementById('payerInput').value = d.accounts[0].name;
+        document.getElementById('receiverInput').value = d.accounts[0].name;
         window.loginData = d;
       });
     });
@@ -72,21 +86,25 @@ async function buyRam(){
     chainId:"5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
   });
 
+  const payerInput = document.getElementById('payerInput');
+  const receiverInput = document.getElementById('receiverInput');
+  const amountInput = document.getElementById('amountInput');
+
   const rpc = new JsonRpc(network.fullhost());
   const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
-  console.log(window.loginData.accounts[0].name)
+
   const result = await eos.transact({
     actions: [{
       account: 'eosio',
-      name: 'buyrambytes',
+      name: 'buyram',
       authorization: [{
         actor: window.loginData.accounts[0].name,
         permission: 'active',
       }],
       data: {
-        payer: window.loginData.accounts[0].name,
-        receiver: window.loginData.accounts[0].name,
-        bytes: 8192,
+        payer: payerInput.value,
+        quant: `${parseFloat(amountInput.value).toFixed(4)} EOS`,
+        receiver: receiverInput.value,
       },
     }]
   }, {
@@ -100,7 +118,6 @@ async function buyRam(){
 
 document.getElementById('deployContractButton').addEventListener('click', () => deployContract());
 async function deployContract(){
-  console.log(window.loginData);
   const network = ScatterJS.Network.fromJson({
     blockchain:'eos',
     protocol:'https',
@@ -201,3 +218,14 @@ function setAbi(e) {
   reader.readAsArrayBuffer(file);
 }
 
+document.getElementById('createProjectModalOpenButton').addEventListener('click', () => {
+  document.getElementById('createProjectModal').style.display = 'flex';
+});
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('createProjectModal').style.display = 'none';
+});
+
+document.getElementById('modalBackground').addEventListener('click', () => {
+  document.getElementById('createProjectModal').style.display = 'none';
+});
