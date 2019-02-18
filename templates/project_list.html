@@ -11,7 +11,7 @@
           Your project
         </div>
         <div class="column is-clearfix">
-          <a href="{% url 'project_new' %}" class="button is-info is-pulled-right">Create project</a>
+          <button class="button is-info is-pulled-right" id="createProjectModalOpenButton">Create project</button>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
         </div>
         <hr>
         <div class="columns">
-          <div class="column is-one-third">
+          <div class="column is-one-quarter">
             <div class="field">
               <button class="button is-info is-fullwidth" id="connectScatterButton">Connect scatter</button>
             </div>
@@ -34,20 +34,27 @@
             <div class="field">
               <button class="button is-info" id="buyRamButton">Buy ram</button>
             </div>
-            <div class="columns">
+            <div class="columns is-multiline">
               <div class="column is-one-third">
                 <div class="field">
-                  <input class="input" type="text" placeholder="Payer">
+                  <input class="input" type="text" placeholder="Payer" id="payerInput">
                 </div>
               </div>
               <div class="column is-one-third">
                 <div class="field">
-                  <input class="input" type="text" placeholder="Receiver">
+                  <input class="input" type="text" placeholder="Receiver" id="receiverInput">
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Amount">
+                <div class="field has-addons has-addons-right">
+                  <p class="control">
+                    <input class="input" type="number" placeholder="Amount" id="amountInput">
+                  </p>
+                  <p class="control">
+                    <a class="button is-static">
+                      EOS
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -136,13 +143,36 @@
         <button class="button is-info is-fullwidth" id="createAccountButton">Create account</button>
         <hr>
         <div class="field">
-          <label class="label">Get faucet (Enter your account)</label>
+          <label class="label">Get faucet <br> (Enter your account, get 100 EOS)</label>
           <div class="control">
             <input class="input" type="text" placeholder="Account name (12 char)" id="accountForFaucet">
           </div>
         </div>
         <button class="button is-info is-fullwidth" id="getFaucetButton">Get faucet</button>
       </div>
+    </div>
+  </div>
+  <div class="modal" id="createProjectModal">
+    <div class="modal-background" id="modalBackground"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Create new project</p>
+        <button class="delete" aria-label="close" id="modalClose"></button>
+      </header>
+      <form action="/projects/new/" method="post">
+        <section class="modal-card-body">
+          {% csrf_token %}
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <input class="input" type="text" name="title" maxlength="200" required="" id="id_title">
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-info" type="submit">Create</button>
+      </footer>
+      </form>
     </div>
   </div>
 </div>
