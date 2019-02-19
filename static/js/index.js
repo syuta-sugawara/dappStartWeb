@@ -3,7 +3,8 @@ import ScatterEOS from 'scatterjs-plugin-eosjs2';
 import {JsonRpc, Api, Serialize} from 'eosjs';
 import axios from 'axios';
 
-document.getElementById('createAccountButton').addEventListener('click', () => createAccount());
+const createAccountButton = document.getElementById('createAccountButton');
+createAccountButton && createAccountButton.addEventListener('click', () => createAccount());
 async function createAccount(){
   const account= document.getElementById("account_name").value;
   await axios.get('http://localhost:8000/projects/account/create?name=' + account)
@@ -25,7 +26,8 @@ async function createAccount(){
     })
 }
 
-document.getElementById('getFaucetButton').addEventListener('click', () => getFaucet());
+const getFaucetButton = document.getElementById('getFaucetButton');
+getFaucetButton && getFaucetButton.addEventListener('click', () => getFaucet());
 async function getFaucet(){
   const accountForFaucet= document.getElementById("accountForFaucet").value;
   await axios.get('http://localhost:8000/projects/account/faucet?name='+accountForFaucet)
@@ -44,8 +46,8 @@ async function getFaucet(){
     })
 }
 
-
-document.getElementById('connectScatterButton').addEventListener('click', () => connectScatter());
+const connectScatterButton = document.getElementById('connectScatterButton');
+connectScatterButton && connectScatterButton.addEventListener('click', () => connectScatter());
 function connectScatter(){
   event.preventDefault()
   ScatterJS.plugins( new ScatterEOS() );
@@ -76,7 +78,8 @@ function connectScatter(){
   });
 }
 
-document.getElementById('buyRamButton').addEventListener('click', () => buyRam());
+const buyRamButton = document.getElementById('buyRamButton');
+buyRamButton && buyRamButton.addEventListener('click', () => buyRam());
 async function buyRam(){
   const network = ScatterJS.Network.fromJson({
     blockchain:'eos',
@@ -115,8 +118,8 @@ async function buyRam(){
   alert(`Success Buy Ram! from "${window.loginData.accounts[0].name}"`);
 }
 
-
-document.getElementById('deployContractButton').addEventListener('click', () => deployContract());
+const deployContractButton = document.getElementById('deployContractButton');
+deployContractButton && deployContractButton.addEventListener('click', () => deployContract());
 async function deployContract(){
   const network = ScatterJS.Network.fromJson({
     blockchain:'eos',
@@ -165,7 +168,8 @@ async function deployContract(){
   console.log(result);
 }
 
-document.getElementById('setWasmInput').addEventListener('change', (e) => setWasm(e));
+const setWasmInput = document.getElementById('setWasmInput');
+setWasmInput && setWasmInput.addEventListener('change', (e) => setWasm(e));
 function setWasm(e) {
   const file = e.target.files[0];
   const reader = new FileReader();
@@ -218,14 +222,17 @@ function setAbi(e) {
   reader.readAsArrayBuffer(file);
 }
 
-document.getElementById('createProjectModalOpenButton').addEventListener('click', () => {
+const createProjectModalOpenButton = document.getElementById('createProjectModalOpenButton');
+createProjectModalOpenButton && createProjectModalOpenButton.addEventListener('click', () => {
   document.getElementById('createProjectModal').style.display = 'flex';
 });
 
-document.getElementById('modalClose').addEventListener('click', () => {
+const modalClose = document.getElementById('modalClose');
+modalClose && modalClose.addEventListener('click', () => {
   document.getElementById('createProjectModal').style.display = 'none';
 });
 
-document.getElementById('modalBackground').addEventListener('click', () => {
+const modalBackground = document.getElementById('modalBackground');
+modalBackground && modalBackground.addEventListener('click', () => {
   document.getElementById('createProjectModal').style.display = 'none';
 });
