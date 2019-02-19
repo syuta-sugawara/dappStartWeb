@@ -3,11 +3,13 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<div class="jumbotron">
-  <h1 class="display-4">DappStart</h1>
-  <p class="lead"></p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg"  href="{% url 'project_list' %}" role="button">deploy your project</a>
-  </p>
-</div>
+<section class="hero is-info is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <a class="title" href="{% url 'project_list' %}">
+          Start your dapps from here
+      </a>
+    </div>
+  </div>
+</section>
 {% endblock content %}

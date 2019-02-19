@@ -11,7 +11,7 @@
           Your project
         </div>
         <div class="column is-clearfix">
-          <a href="{% url 'project_new' %}" class="button is-info is-pulled-right">Create project</a>
+          <button class="button is-info is-pulled-right" id="createProjectModalOpenButton">Create project</button>
         </div>
       </div>
 
@@ -21,58 +21,40 @@
       {% for project in object_list %}
       <div class="box">
         <div class="columns is-vcentered">
-          <div class="column is-3"><p>{{project.title}}</p></div>
-          <div class="column"><p>Wallet name</p></div>
-          <div class="column"><button class="button is-info">Open</button></div>
-          <div class="column is-3"><input class="input" type="text" placeholder="Password"></div>
-          <div class="column"><button class="button is-info">Unlock</button></div>
+          <div class="column is-4"><p class="title is-4">{{project.title}}</p></div>
         </div>
+        <hr>
         <div class="columns">
-          <div class="column is-one-third">
-            <div class="field">
-              <input class="input" type="text" placeholder="Wallet name">
-            </div>
-            <div class="field">
-              <button class="button is-info is-fullwidth">Create Wallet</button>
-            </div>
-            <div class="field">
-              or
-            </div>
+          <div class="column is-one-quarter">
             <div class="field">
               <button class="button is-info is-fullwidth" id="connectScatterButton">Connect scatter</button>
-            </div>
-            <hr>
-            <div class="field">
-              <input class="input" type="text" placeholder="Account name">
-            </div>
-            <div class="field">
-              <input class="input" type="text" placeholder="Private key">
-            </div>
-            <div class="field">
-              <button class="button is-info is-fullwidth">Account import</button>
-            </div>
-            <div class="field">
-              <p class="help is-danger">Key won't be stored in this app</p>
             </div>
           </div>
           <div class="column">
             <div class="field">
               <button class="button is-info" id="buyRamButton">Buy ram</button>
             </div>
-            <div class="columns">
+            <div class="columns is-multiline">
               <div class="column is-one-third">
                 <div class="field">
-                  <input class="input" type="text" placeholder="Payer">
+                  <input class="input" type="text" placeholder="Payer" id="payerInput">
                 </div>
               </div>
               <div class="column is-one-third">
                 <div class="field">
-                  <input class="input" type="text" placeholder="Receiver">
+                  <input class="input" type="text" placeholder="Receiver" id="receiverInput">
                 </div>
               </div>
               <div class="column is-one-third">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Amount">
+                <div class="field has-addons has-addons-right">
+                  <p class="control">
+                    <input class="input" type="number" placeholder="Amount" id="amountInput">
+                  </p>
+                  <p class="control">
+                    <a class="button is-static">
+                      EOS
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -80,7 +62,7 @@
             <div class="field">
               <button class="button is-info" id="deployContractButton">Deploy contract</button>
             </div>
-            <div class="columns">
+            <div class="columns is-multiline">
               <div class="column is-half">
                 <div class="field">
                   <input class="input" type="text" placeholder="Account name">
@@ -115,6 +97,22 @@
                 </div>
               </div>
             </div>
+            <hr>
+            <div class="field">
+              <button class="button is-info">Try your contract</button>
+            </div>
+            <div class="columns is-multiline">
+              <div class="column is-half">
+                <div class="field">
+                  <input class="input" type="text" placeholder="Account name">
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <button class="button is-primary">Action</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -145,13 +143,36 @@
         <button class="button is-info is-fullwidth" id="createAccountButton">Create account</button>
         <hr>
         <div class="field">
-          <label class="label">Get faucet (Enter your account)</label>
+          <label class="label">Get faucet <br> (Enter your account, get 100 EOS)</label>
           <div class="control">
             <input class="input" type="text" placeholder="Account name (12 char)" id="accountForFaucet">
           </div>
         </div>
         <button class="button is-info is-fullwidth" id="getFaucetButton">Get faucet</button>
       </div>
+    </div>
+  </div>
+  <div class="modal" id="createProjectModal">
+    <div class="modal-background" id="modalBackground"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Create new project</p>
+        <button class="delete" aria-label="close" id="modalClose"></button>
+      </header>
+      <form action="/projects/new/" method="post">
+        <section class="modal-card-body">
+          {% csrf_token %}
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <input class="input" type="text" name="title" maxlength="200" required="" id="id_title">
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-info" type="submit">Create</button>
+      </footer>
+      </form>
     </div>
   </div>
 </div>
