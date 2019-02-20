@@ -181,7 +181,8 @@ function setWasm(e) {
   reader.readAsArrayBuffer(file);
 }
 
-document.getElementById('setAbiInput').addEventListener('change', (e) => setAbi(e));
+const setAbiInput = document.getElementById('setAbiInput');
+setAbiInput && setAbiInput.addEventListener('change', (e) => setAbi(e));
 function setAbi(e) {
   const file = e.target.files[0];
   const reader = new FileReader();
