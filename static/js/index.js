@@ -181,7 +181,8 @@ function setWasm(e) {
     const buffer = e.target.result;
     window.wasm = Buffer.from(new Uint8Array(buffer)).toString('hex');
     console.log('set wasm !!');
-  })
+    document.getElementById('wasmFileName').innerText = file.name;
+  });
   reader.readAsArrayBuffer(file);
 }
 
@@ -205,8 +206,9 @@ function setAbi(e) {
 
     abiDefinition.serialize(buffer, abi);
     window.abi = Buffer.from(buffer.asUint8Array()).toString('hex');
-    console.log('set abi !!')
-  })
+    console.log('set abi !!');
+    document.getElementById('abiFileName').innerText = file.name;
+  });
   reader.readAsArrayBuffer(file);
 }
 

@@ -71,30 +71,30 @@
             <div class="columns is-multiline">
               <div class="column">
                 <div class="field">
-                  <div class="file is-centered">
+                  <div class="file has-name">
                     <label class="file-label">
-                      <input class="file-input" type="file" name="resume" id="setWasmInput">
+                      <input class="file-input" type="file" accept=".wasm" name="resume" id="setWasmInput">
                       <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">Wasm</span>
+                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                        <span class="file-label">Choose a Wasm file…</span>
                       </span>
+                      <span class="file-name" id="wasmFileName">Not selected</span>
                     </label>
                   </div>
                 </div>
               </div>
               <div class="column">
-                <div class="file is-centered">
-                  <label class="file-label">
-                    <input class="file-input" type="file" name="resume" id="setAbiInput">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">abi</span>
-                      </span>
-                  </label>
+                <div class="field">
+                  <div class="file has-name">
+                    <label class="file-label">
+                      <input class="file-input" type="file" accept=".abi" name="resume" id="setAbiInput">
+                      <span class="file-cta">
+                      <span class="file-icon"><i class="fas fa-upload"></i></span>
+                      <span class="file-label">Choose a Abi file…</span>
+                    </span>
+                      <span class="file-name" id="abiFileName">Not selected</span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
