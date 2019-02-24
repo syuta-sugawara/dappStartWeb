@@ -36,3 +36,7 @@
   background: url('../img/hero.jpg') no-repeat fixed center center;
   background-size: cover;
 }
+
+.my-contract-button {
+  display: none;
+}

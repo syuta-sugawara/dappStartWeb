@@ -3,6 +3,26 @@ import ScatterEOS from 'scatterjs-plugin-eosjs2';
 import {JsonRpc, Api, Serialize} from 'eosjs';
 import axios from 'axios';
 
+ScatterJS.plugins(new ScatterEOS());
+
+const network = ScatterJS.Network.fromJson({
+  blockchain:'eos',
+  protocol:'https',
+  host:'api.kylin.alohaeos.com',
+  port:"443",
+  chainId:"5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+});
+
+const rpc = new JsonRpc(network.fullhost());
+
+const api = new Api({
+  rpc,
+  textDecoder: new TextDecoder(),
+  textEncoder: new TextEncoder(),
+});
+
+const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
+
 const createAccountButton = document.getElementById('createAccountButton');
 createAccountButton && createAccountButton.addEventListener('click', () => createAccount());
 async function createAccount(){
@@ -49,22 +69,9 @@ async function getFaucet(){
 const connectScatterButton = document.getElementById('connectScatterButton');
 connectScatterButton && connectScatterButton.addEventListener('click', () => connectScatter());
 function connectScatter(){
-  event.preventDefault()
-  ScatterJS.plugins( new ScatterEOS() );
-
-  const network = ScatterJS.Network.fromJson({
-    blockchain:'eos',
-    chainId:'5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
-    host:'api.kylin.alohaeos.com',
-    port:443,
-    protocol:'https'
-  });
-
   ScatterJS.connect('dappStart', {network}).then(connected => {
     console.log(connected)
     if(!connected) return false;
-    const scatter = ScatterJS.scatter;
-    console.log(scatter)
     ScatterJS.logout().then(r =>{
       ScatterJS.login().then(d =>{
         console.log(d);
@@ -81,21 +88,9 @@ function connectScatter(){
 const buyRamButton = document.getElementById('buyRamButton');
 buyRamButton && buyRamButton.addEventListener('click', () => buyRam());
 async function buyRam(){
-  const network = ScatterJS.Network.fromJson({
-    blockchain:'eos',
-    protocol:'https',
-    host:'api.kylin.alohaeos.com',
-    port:"443",
-    chainId:"5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
-  });
-
   const payerInput = document.getElementById('payerInput');
   const receiverInput = document.getElementById('receiverInput');
   const amountInput = document.getElementById('amountInput');
-
-  const rpc = new JsonRpc(network.fullhost());
-  const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
-
   const result = await eos.transact({
     actions: [{
       account: 'eosio',
@@ -121,17 +116,6 @@ async function buyRam(){
 const deployContractButton = document.getElementById('deployContractButton');
 deployContractButton && deployContractButton.addEventListener('click', () => deployContract());
 async function deployContract(){
-  const network = ScatterJS.Network.fromJson({
-    blockchain:'eos',
-    protocol:'https',
-    host:'api.kylin.alohaeos.com',
-    port:"443",
-    chainId:"5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
-  });
-
-  const rpc = new JsonRpc(network.fullhost());
-  const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
-
   const result = await eos.transact({
     actions: [{
       account: 'eosio',
@@ -187,23 +171,6 @@ function setAbi(e) {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.addEventListener('load', (e) =>{
-
-    const network = ScatterJS.Network.fromJson({
-      blockchain:'eos',
-      protocol:'https',
-      host:'api.kylin.alohaeos.com',
-      port:"443",
-      chainId:"5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
-    });
-
-    const rpc = new JsonRpc(network.fullhost());
-
-    const api = new Api({
-      rpc,
-      textDecoder: new TextDecoder(),
-      textEncoder: new TextEncoder(),
-    })
-
     const buffer = new Serialize.SerialBuffer({
       textEncoder: api.textEncoder,
       textDecoder: api.textDecoder,
@@ -237,3 +204,65 @@ const modalBackground = document.getElementById('modalBackground');
 modalBackground && modalBackground.addEventListener('click', () => {
   document.getElementById('createProjectModal').style.display = 'none';
 });
+
+const getYourContractButton = document.getElementById('getYourContractButton');
+
+getYourContractButton && getYourContractButton.addEventListener('click', async () => {
+  const contractDataContainer = document.getElementById('contractDataContainer');
+  const contractNameInput = document.getElementById('contractNameInput');
+  window.contractName = contractNameInput.value;
+  const contract = await api.getContract(window.loginData.accounts[0].name);
+  window.contractFields = contract.actions.get(window.contractName).fields;
+
+  const input = document.createElement("input");
+  input.setAttribute("type","text");
+  input.classList.add('input');
+  input.classList.add('contract-value-input');
+
+  for(let i=0; i < window.contractFields.length; i++) {
+    input.setAttribute('data-name', contractFields[i].name);
+    input.setAttribute("placeholder", contractFields[i].name);
+    contractDataContainer.appendChild(input);
+  }
+
+  if(window.contractFields.length !== 0) {
+    getYourContractButton.disabled = true;
+    contractNameInput.disabled = true;
+    document.getElementsByClassName('my-contract-button')[0].style.display = 'block';
+  }
+});
+
+const tryYourContractButton = document.getElementById('tryYourContractButton');
+
+tryYourContractButton && tryYourContractButton.addEventListener('click', async () => {
+  const inputs = document.getElementsByClassName('contract-value-input');
+  const data = {};
+
+  for(let i=0; i < inputs.length; i++) {
+    data[window.contractFields[i].name] = inputs[i].value;
+  }
+
+  await eos.transact({
+    actions: [{
+      account: window.loginData.accounts[0].name,
+      name: window.contractName,
+      authorization: [{
+        actor: window.loginData.accounts[0].name,
+        permission: 'active',
+        broadcast: true,
+        sign: true
+      }],
+      data: data
+    }],
+  }, {
+    blocksBehind: 3,
+    expireSeconds: 30,
+  }).catch(e => {
+    const messageDom= document.getElementById("message");
+    messageDom.classList.add("has-text-danger");
+    messageDom.classList.remove("hidden");
+    messageDom.classList.add("visible");
+    messageDom.innerText = e.message;
+  });
+});
+

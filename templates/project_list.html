@@ -31,9 +31,6 @@
             </div>
           </div>
           <div class="column">
-            <div class="field">
-              <button class="button is-info" id="buyRamButton">Buy ram</button>
-            </div>
             <div class="columns is-multiline">
               <div class="column is-one-third">
                 <div class="field">
@@ -58,16 +55,11 @@
                 </div>
               </div>
             </div>
-            <hr>
-            <div class="field">
-              <button class="button is-info" id="deployContractButton">Deploy contract</button>
+            <div class="field has-text-right">
+              <button class="button is-info" id="buyRamButton">Buy ram</button>
             </div>
+            <hr>
             <div class="columns is-multiline">
-              <div class="column is-half">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Account name">
-                </div>
-              </div>
               <div class="column">
                 <div class="field">
                   <div class="file is-centered">
@@ -97,21 +89,29 @@
                 </div>
               </div>
             </div>
-            <hr>
-            <div class="field">
-              <button class="button is-info">Try your contract</button>
+            <div class="field has-text-right">
+              <button class="button is-info" id="deployContractButton">Deploy contract</button>
             </div>
+            <hr>
             <div class="columns is-multiline">
-              <div class="column is-half">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Account name">
-                </div>
-              </div>
               <div class="column">
                 <div class="field">
-                  <button class="button is-primary">Action</button>
+                  <input class="input" type="text" placeholder="Contract name (ex. hi)" id="contractNameInput">
                 </div>
               </div>
+            </div>
+            <div class="field has-text-right">
+              <button class="button is-info" id="getYourContractButton">Get your contract</button>
+            </div>
+            <div class="columns is-multiline">
+              <div class="column">
+                <div class="field" id="contractDataContainer">
+
+                </div>
+              </div>
+            </div>
+            <div class="field has-text-right my-contract-button">
+              <button class="button is-info" id="tryYourContractButton">Try your contract</button>
             </div>
           </div>
         </div>
