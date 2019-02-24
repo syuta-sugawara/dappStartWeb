@@ -27,7 +27,16 @@
         <div class="columns">
           <div class="column is-one-quarter">
             <div class="field">
-              <button class="button is-info is-fullwidth" id="connectScatterButton">Connect scatter</button>
+              <p class="has-text-centered">Account name</p>
+              <p class="has-text-centered">
+                <b id="scatterName">Not connected</b>
+              </p>
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth" id="connectScatterButton" disabled>Connect scatter</button>
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth" id="logoutScatterButton" disabled>Logout scatter</button>
             </div>
           </div>
           <div class="column">
@@ -56,7 +65,7 @@
               </div>
             </div>
             <div class="field has-text-right">
-              <button class="button is-info" id="buyRamButton">Buy ram</button>
+              <button class="button is-info" id="buyRamButton" disabled>Buy ram</button>
             </div>
             <hr>
             <div class="columns is-multiline">
@@ -90,7 +99,7 @@
               </div>
             </div>
             <div class="field has-text-right">
-              <button class="button is-info" id="deployContractButton">Deploy contract</button>
+              <button class="button is-info" id="deployContractButton" disabled>Deploy contract</button>
             </div>
             <hr>
             <div class="columns is-multiline">
@@ -101,7 +110,7 @@
               </div>
             </div>
             <div class="field has-text-right">
-              <button class="button is-info" id="getYourContractButton">Get your contract</button>
+              <button class="button is-info" id="getYourContractButton" disabled>Get your contract</button>
             </div>
             <div class="columns is-multiline">
               <div class="column">

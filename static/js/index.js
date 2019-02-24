@@ -22,6 +22,28 @@ const api = new Api({
 });
 
 const eos = ScatterJS.scatter.eos(network, Api, { rpc, beta3:true });
+window.scatterConnected = false;
+
+const scatterNameElement = document.getElementById('scatterName');
+const logoutScatterButton = document.getElementById('logoutScatterButton');
+
+const connectScatterButton = document.getElementById('connectScatterButton');
+function loadAccount() {
+  ScatterJS.scatter.connect('dappStart', {network}).then(connected => {
+    if ( !connected ) {
+      console.log("not connect");
+    }
+    if(ScatterJS.scatter.identity != null) {
+      window.scatterAccount = ScatterJS.scatter.identity.accounts.find(x => x.blockchain === 'eos');
+      window.scatterConnected = true;
+      scatterNameElement.innerText = window.scatterAccount.name;
+      afterLogin();
+    } else {
+      connectScatterButton.disabled = false;
+    }
+  });
+}
+loadAccount();
 
 const createAccountButton = document.getElementById('createAccountButton');
 createAccountButton && createAccountButton.addEventListener('click', () => createAccount());
@@ -66,7 +88,6 @@ async function getFaucet(){
     })
 }
 
-const connectScatterButton = document.getElementById('connectScatterButton');
 connectScatterButton && connectScatterButton.addEventListener('click', () => connectScatter());
 function connectScatter(){
   ScatterJS.connect('dappStart', {network}).then(connected => {
@@ -76,10 +97,9 @@ function connectScatter(){
       ScatterJS.login().then(d =>{
         console.log(d);
         alert(`Logged in by "${d.accounts[0].name}"`);
-        document.getElementById("accountForFaucet").value = d.accounts[0].name;
-        document.getElementById('payerInput').value = d.accounts[0].name;
-        document.getElementById('receiverInput').value = d.accounts[0].name;
-        window.loginData = d;
+        window.scatterAccount = d.accounts[0];
+        scatterNameElement.innerText = window.scatterAccount.name;
+        afterLogin();
       });
     });
   });
@@ -96,7 +116,7 @@ async function buyRam(){
       account: 'eosio',
       name: 'buyram',
       authorization: [{
-        actor: window.loginData.accounts[0].name,
+        actor: window.scatterAccount.name,
         permission: 'active',
       }],
       data: {
@@ -110,7 +130,7 @@ async function buyRam(){
     expireSeconds: 30,
   });
   console.log(result);
-  alert(`Success Buy Ram! from "${window.loginData.accounts[0].name}"`);
+  alert(`Success Buy Ram! from "${window.scatterAccount.name}"`);
 }
 
 const deployContractButton = document.getElementById('deployContractButton');
@@ -121,11 +141,11 @@ async function deployContract(){
       account: 'eosio',
       name: 'setcode',
       authorization: [{
-        actor: window.loginData.accounts[0].name,
+        actor: window.scatterAccount.name,
         permission: 'active',
       }],
       data: {
-        account: window.loginData.accounts[0].name,
+        account: window.scatterAccount.name,
         vmtype: 0,
         vmversion: 0,
         code: window.wasm,
@@ -136,12 +156,12 @@ async function deployContract(){
         name: 'setabi',
         authorization: [
           {
-            actor: window.loginData.accounts[0].name,
+            actor: window.scatterAccount.name,
             permission: 'active',
           },
         ],
         data: {
-          account: window.loginData.accounts[0].name,
+          account: window.scatterAccount.name,
           abi: window.abi,
         },
       }]
@@ -211,7 +231,7 @@ getYourContractButton && getYourContractButton.addEventListener('click', async (
   const contractDataContainer = document.getElementById('contractDataContainer');
   const contractNameInput = document.getElementById('contractNameInput');
   window.contractName = contractNameInput.value;
-  const contract = await api.getContract(window.loginData.accounts[0].name);
+  const contract = await api.getContract(window.scatterAccount.name);
   window.contractFields = contract.actions.get(window.contractName).fields;
 
   const input = document.createElement("input");
@@ -244,10 +264,10 @@ tryYourContractButton && tryYourContractButton.addEventListener('click', async (
 
   await eos.transact({
     actions: [{
-      account: window.loginData.accounts[0].name,
+      account: window.scatterAccount.name,
       name: window.contractName,
       authorization: [{
-        actor: window.loginData.accounts[0].name,
+        actor: window.scatterAccount.name,
         permission: 'active',
         broadcast: true,
         sign: true
@@ -266,3 +286,29 @@ tryYourContractButton && tryYourContractButton.addEventListener('click', async (
   });
 });
 
+function afterLogin() {
+  document.getElementById("accountForFaucet").value = window.scatterAccount.name;
+  document.getElementById('payerInput').value = window.scatterAccount.name;
+  document.getElementById('receiverInput').value = window.scatterAccount.name;
+  logoutScatterButton.disabled = false;
+  getYourContractButton.disabled = false;
+  deployContractButton.disabled = false;
+  buyRamButton.disabled = false;
+  connectScatterButton.disabled = true;
+}
+
+logoutScatterButton && logoutScatterButton.addEventListener('click', () => {
+  if(ScatterJS.scatter.identity != null) {
+    logoutScatterButton.disabled = true;
+    ScatterJS.scatter.forgetIdentity();
+    connectScatterButton.disabled = false;
+    window.scatterConnected = false;
+    document.getElementById("accountForFaucet").value = '';
+    document.getElementById('payerInput').value = '';
+    document.getElementById('receiverInput').value = '';
+    scatterNameElement.innerText = 'Not connected';
+    getYourContractButton.disabled = true;
+    deployContractButton.disabled = true;
+    buyRamButton.disabled = true;
+  }
+});
