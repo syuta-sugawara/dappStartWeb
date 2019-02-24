@@ -26,6 +26,7 @@ window.scatterConnected = false;
 
 const scatterNameElement = document.getElementById('scatterName');
 const logoutScatterButton = document.getElementById('logoutScatterButton');
+const messageDom = document.getElementById("message");
 
 const connectScatterButton = document.getElementById('connectScatterButton');
 function loadAccount() {
@@ -51,7 +52,6 @@ async function createAccount(){
   const account= document.getElementById("account_name").value;
   await axios.get('http://localhost:8000/projects/account/create?name=' + account)
     .then(function (response) {
-      const messageDom= document.getElementById("message");
       if(response.data.result.error) {
         messageDom.classList.add("has-text-danger");
         messageDom.classList.remove("hidden");
@@ -131,12 +131,16 @@ async function buyRam(){
   });
   console.log(result);
   alert(`Success Buy Ram! from "${window.scatterAccount.name}"`);
+  messageDom.classList.remove("has-text-danger");
+  messageDom.classList.remove("hidden");
+  messageDom.classList.add("visible");
+  messageDom.innerText = `See https://kylin.eosx.io/tx/${result.transaction_id}?listView=traces`;
 }
 
 const deployContractButton = document.getElementById('deployContractButton');
 deployContractButton && deployContractButton.addEventListener('click', () => deployContract());
 async function deployContract(){
-  const result = await eos.transact({
+  await eos.transact({
     actions: [{
       account: 'eosio',
       name: 'setcode',
@@ -168,8 +172,19 @@ async function deployContract(){
   }, {
     blocksBehind: 3,
     expireSeconds: 30,
+  }).then(result =>{
+    alert(`Success try contract`);
+    messageDom.classList.remove("has-text-danger");
+    messageDom.classList.remove("hidden");
+    messageDom.classList.add("visible");
+    messageDom.innerText = `See https://kylin.eosx.io/tx/${result.transaction_id}?listView=traces`;
+  }).catch(e => {
+    const messageDom= document.getElementById("message");
+    messageDom.classList.add("has-text-danger");
+    messageDom.classList.remove("hidden");
+    messageDom.classList.add("visible");
+    messageDom.innerText = e.message;
   });
-  console.log(result);
 }
 
 const setWasmInput = document.getElementById('setWasmInput');
@@ -279,6 +294,12 @@ tryYourContractButton && tryYourContractButton.addEventListener('click', async (
   }, {
     blocksBehind: 3,
     expireSeconds: 30,
+  }).then(result =>{
+    alert(`Success try contract`);
+    messageDom.classList.remove("has-text-danger");
+    messageDom.classList.remove("hidden");
+    messageDom.classList.add("visible");
+    messageDom.innerText = `See https://kylin.eosx.io/tx/${result.transaction_id}?listView=traces`;
   }).catch(e => {
     const messageDom= document.getElementById("message");
     messageDom.classList.add("has-text-danger");
