@@ -1,6 +1,3 @@
-.my-header {
-}
-
 .my-navbar-menu {
   z-index: 100;
 }
@@ -33,4 +30,13 @@
 
 .visible {
   display: block;
+}
+
+.my-hero {
+  background: url('../img/hero.jpg') no-repeat fixed center center;
+  background-size: cover;
+}
+
+.my-contract-button {
+  display: none;
 }

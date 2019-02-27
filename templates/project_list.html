@@ -8,7 +8,7 @@
     <div class="column is-two-thirds">
       <div class="columns">
         <div class="column subtitle">
-          Your project
+          Your projects
         </div>
         <div class="column is-clearfix">
           <button class="button is-info is-pulled-right" id="createProjectModalOpenButton">Create project</button>
@@ -27,13 +27,19 @@
         <div class="columns">
           <div class="column is-one-quarter">
             <div class="field">
-              <button class="button is-info is-fullwidth" id="connectScatterButton">Connect scatter</button>
+              <p class="has-text-centered">Account name</p>
+              <p class="has-text-centered">
+                <b id="scatterName">Not connected</b>
+              </p>
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth" id="connectScatterButton" disabled>Connect scatter</button>
+            </div>
+            <div class="field">
+              <button class="button is-info is-fullwidth" id="logoutScatterButton" disabled>Logout scatter</button>
             </div>
           </div>
           <div class="column">
-            <div class="field">
-              <button class="button is-info" id="buyRamButton">Buy ram</button>
-            </div>
             <div class="columns is-multiline">
               <div class="column is-one-third">
                 <div class="field">
@@ -58,60 +64,63 @@
                 </div>
               </div>
             </div>
-            <hr>
-            <div class="field">
-              <button class="button is-info" id="deployContractButton">Deploy contract</button>
+            <div class="field has-text-right">
+              <button class="button is-info" id="buyRamButton" disabled>Buy ram</button>
             </div>
+            <hr>
             <div class="columns is-multiline">
-              <div class="column is-half">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Account name">
-                </div>
-              </div>
               <div class="column">
                 <div class="field">
-                  <div class="file is-centered">
+                  <div class="file has-name">
                     <label class="file-label">
-                      <input class="file-input" type="file" name="resume" id="setWasmInput">
+                      <input class="file-input" type="file" accept=".wasm" name="resume" id="setWasmInput">
                       <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">Wasm</span>
+                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                        <span class="file-label">Choose a Wasm file…</span>
                       </span>
+                      <span class="file-name" id="wasmFileName">Not selected</span>
                     </label>
                   </div>
                 </div>
               </div>
               <div class="column">
-                <div class="file is-centered">
-                  <label class="file-label">
-                    <input class="file-input" type="file" name="resume" id="setAbiInput">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">abi</span>
-                      </span>
-                  </label>
+                <div class="field">
+                  <div class="file has-name">
+                    <label class="file-label">
+                      <input class="file-input" type="file" accept=".abi" name="resume" id="setAbiInput">
+                      <span class="file-cta">
+                      <span class="file-icon"><i class="fas fa-upload"></i></span>
+                      <span class="file-label">Choose a Abi file…</span>
+                    </span>
+                      <span class="file-name" id="abiFileName">Not selected</span>
+                    </label>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="field has-text-right">
+              <button class="button is-info" id="deployContractButton" disabled>Deploy contract</button>
             </div>
             <hr>
-            <div class="field">
-              <button class="button is-info">Try your contract</button>
-            </div>
             <div class="columns is-multiline">
-              <div class="column is-half">
-                <div class="field">
-                  <input class="input" type="text" placeholder="Account name">
-                </div>
-              </div>
               <div class="column">
                 <div class="field">
-                  <button class="button is-primary">Action</button>
+                  <input class="input" type="text" placeholder="Contract name (ex. hi)" id="contractNameInput">
                 </div>
               </div>
+            </div>
+            <div class="field has-text-right">
+              <button class="button is-info" id="getYourContractButton" disabled>Get your contract</button>
+            </div>
+            <div class="columns is-multiline">
+              <div class="column">
+                <div class="field" id="contractDataContainer">
+
+                </div>
+              </div>
+            </div>
+            <div class="field has-text-right my-contract-button">
+              <button class="button is-info" id="tryYourContractButton">Try your contract</button>
             </div>
           </div>
         </div>

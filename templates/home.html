@@ -3,12 +3,17 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<section class="hero is-info is-fullheight-with-navbar">
+<section class="hero is-info is-fullheight-with-navbar my-hero">
   <div class="hero-body">
     <div class="container">
-      <a class="title" href="{% url 'project_list' %}">
-          Start your dapps from here
-      </a>
+      <h1 class="title has-text-right">
+          START YOUR DAPPS FROM HERE
+      </h1>
+      <p class="has-text-right">
+        <a class="button is-medium" href="{% url 'project_list' %}">
+          GET STARTED FOR FREE
+        </a>
+      </p>
     </div>
   </div>
 </section>
